@@ -1,0 +1,49 @@
+﻿@{
+    List<BreadcrumbItem> items = new List<BreadcrumbItem>()
+    {
+        new BreadcrumbItem("Main Page", "Home", "Index")
+    };
+
+    if (ViewBag.Breadcrumb is not null)
+        foreach (BreadcrumbItem item in ViewBag.Breadcrumb)
+            items.Add(item);
+}
+
+<div class="container-md mb-3">
+    @if (ViewBag.HasBreadcrumb)
+    {
+        @RenderSection("Breadcrumb", false)
+    }
+    else
+    {
+        string? currentControllerName = (string?)ViewContext.RouteData.Values["controller"];
+        string? currentActionName = (string?)ViewContext.RouteData.Values["action"];
+
+        bool IsBreadcrumbItemActive(BreadcrumbItem item)
+        {
+            return (currentControllerName == item.ControllerName) && (currentActionName == item.ActionName);
+        }
+
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                @foreach (BreadcrumbItem item in items)
+                {
+                    bool isActive = IsBreadcrumbItemActive(item);
+
+                    <li class="breadcrumb-item @(isActive ? "active" : "")">
+                        @if (isActive)
+                        {
+                            <text>@item.Text</text>
+                        }
+                        else
+                        {
+                            <a asp-controller="@item.ControllerName" asp-action="@item.ActionName">
+                                @item.Text
+                            </a>
+                        }
+                    </li>
+                }
+            </ol>
+        </nav>
+    }
+</div>

@@ -1,0 +1,26 @@
+﻿@model List<Product>
+
+@{
+    const int PRODUCTS_PER_ROW = 4;
+
+    int productCount = Model.Count;
+    int rowsCount = (int) Math.Ceiling(((double) productCount) / PRODUCTS_PER_ROW);
+}
+
+<div class="container-fluid px-0">
+    @for (int rowIndex = 0; rowIndex < rowsCount; rowIndex++)
+    {
+        int fromItemIndex = rowIndex * PRODUCTS_PER_ROW;
+        int toItemIndex = fromItemIndex + PRODUCTS_PER_ROW;
+
+        <div class="row">
+            @for (int itemIndex = fromItemIndex; itemIndex < toItemIndex; itemIndex++)
+            {
+                if (itemIndex >= productCount)
+                    break;
+
+                <partial name="Components/_ProductCardPartial" model="@Model[itemIndex]" />
+            }
+        </div>
+    }
+</div>

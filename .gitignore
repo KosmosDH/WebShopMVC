@@ -1,0 +1,5 @@
+﻿# Ignore client-side libraries
+wwwroot/lib
+/bin/Debug/net8.0
+/.vs/WebShopMVC
+/obj

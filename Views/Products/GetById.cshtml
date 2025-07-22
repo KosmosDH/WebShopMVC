@@ -1,0 +1,62 @@
+﻿@model ProductViewModel
+
+@{
+    Product product = Model.Product;
+}
+
+<p class="fs-4">Product info</p>
+<hr />
+
+<p>
+    <b>Name:</b>
+    <br />
+    @product.Name
+</p>
+<p>
+    <b>Description:</b>
+    <br />
+    @if (product.Description is not null)
+    {
+        <text>@product.Description</text>
+    }
+    else
+    {
+        <i class="text-secondary">Description is empty...</i>
+    }
+</p>
+<p>
+    <b>Price:</b>
+    <br />
+    @product.Price
+</p>
+
+@if (Model.Review is not null)
+{
+    <p class="fs-4">Leave a review about product</p>
+    <hr />
+
+    @using (Html.BeginForm())
+    {
+        ReviewDTO review = Model.Review;
+
+        <div class="mb-3">
+            @Html.LabelFor(model => review.Author, htmlAttributes: new { @class = "form-label" })
+            @Html.EditorFor(model => review.Author, new
+                {
+                    htmlAttributes = new { @class = "form-control" }
+                })
+        </div>
+        <div class="mb-3">
+            @Html.LabelFor(model => review.Text, htmlAttributes: new { @class = "form-label" })
+            @Html.EditorFor(model => review.Text, new
+                {
+                    htmlAttributes = new { @class = "form-control" }
+                })
+        </div>
+        <div class="mb-3">
+            <button class="btn btn-primary" type="submit">
+                Leave a review
+            </button>
+        </div>
+    }
+}
