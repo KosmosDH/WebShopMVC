@@ -1,14 +1,19 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Razor.TagHelpers;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebShopMVC.Models.DTO
 {
     public class ReviewDTO
     {
-        public int? ProductId { get; set; }
-        [Display(Name = "Your Name")]
+        [Display(Name = "Name")]
+        [Required(ErrorMessage = "Put your name")]
+        [MaxLength(64, ErrorMessage = "Author name is too long")]
         public string? Author { get; set; }
-        [Display(Name = "Your Review")]
+
+        [Display(Name = "Review text")]
         [DataType(DataType.MultilineText)]
-        public  string? Text { get; set; }
+        [Required(ErrorMessage = "Put text of review")]
+        [MaxLength(512, ErrorMessage = "Review text is too long")]
+        public string? Text { get; set; }
     }
 }

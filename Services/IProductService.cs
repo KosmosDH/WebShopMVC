@@ -1,10 +1,10 @@
-﻿using WebShopMVC.Models.Entities;
+﻿using WebShopMVC.Data.Models;
 
 namespace WebShopMVC.Services
 {
     public interface IProductService
     {
-        public List<Product> GetProducts();
-        public Product? GetProductById(int id);
+        IList<Product> GetProducts();
+        Product? GetProductById(int id);
     }
 }

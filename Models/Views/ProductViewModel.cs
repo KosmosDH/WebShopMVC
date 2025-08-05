@@ -1,5 +1,5 @@
-﻿using WebShopMVC.Models.DTO;
-using WebShopMVC.Models.Entities;
+﻿using WebShopMVC.Data.Models;
+using WebShopMVC.Models.DTO;
 
 namespace WebShopMVC.Models.Views
 {
