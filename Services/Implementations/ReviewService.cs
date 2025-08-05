@@ -1,23 +1,21 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using WebShopMVC.Data;
 using WebShopMVC.Data.Models;
-using WebShopMVC.Data.Repositories;
-using WebShopMVC.Data.Repositories.Implementations;
 using WebShopMVC.Models.DTO;
 
 namespace WebShopMVC.Services.Implementations
 {
     public class ReviewService : IReviewService
     {
-        private readonly ReviewRepository _reviewRepository;
+        private readonly ApplicationDbContext _database;
 
-        public ReviewService(ReviewRepository reviewRepository)
+        public ReviewService(ApplicationDbContext database)
         {
-            _reviewRepository = reviewRepository;
+            _database = database;
         }
 
         public IList<Review> GetReviewsByProductId(int productId)
         {
-            return _reviewRepository.GetByProductId(productId);
+            return _database.Reviews.Where(r => r.ProductId == productId).ToList();
         }
 
         public void CreateReview(int productId, ReviewDTO reviewDTO)
@@ -27,14 +25,13 @@ namespace WebShopMVC.Services.Implementations
 
             Review review = new Review()
             {
-                Id = -1,
                 ProductId = productId,
                 Author = reviewDTO.Author,
-                Text = reviewDTO.Text,
-                CreatedAt = DateTime.Now
+                Text = reviewDTO.Text
             };
 
-            _reviewRepository.Add(review);
+            _database.Reviews.Add(review);
+            _database.SaveChanges();
         }
     }
 }

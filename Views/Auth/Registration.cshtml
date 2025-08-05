@@ -1,0 +1,48 @@
+﻿@model NewUserDto
+
+<p class="fs-4">Registration</p>
+<hr />
+
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger">
+        <span>@ViewBag.ErrorMessage</span>
+    </div>
+}
+
+<p>
+    If you already have an account, you can
+    <a asp-controller="Auth" asp-action="Authorization">log in</a>.
+</p>
+<hr />
+
+<form asp-controller="Auth" asp-action="SignUp" method="post">
+    <div class="mb-3">
+        <label class="form-label" asp-for="FirstName">FirstName:</label>
+        <input class="form-control" asp-for="FirstName" />
+        <span class="text-danger" asp-validation-for="FirstName"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label" asp-for="LastName">LastName (not required):</label>
+        <input class="form-control" asp-for="LastName" />
+        <span class="text-danger" asp-validation-for="LastName"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label" asp-for="Email">Email address:</label>
+        <input class="form-control" asp-for="Email" />
+        <span class="text-danger" asp-validation-for="Email"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label" asp-for="Password">Password:</label>
+        <input class="form-control" asp-for="Password" />
+        <span class="text-danger" asp-validation-for="Password"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label" asp-for="ConfirmPassword">Confirm Password:</label>
+        <input class="form-control" asp-for="ConfirmPassword" />
+        <span class="text-danger" asp-validation-for="ConfirmPassword"></span>
+    </div>
+    <div class="mb-3">
+        <button class="btn btn-primary" type="submit">Registration</button>
+    </div>
+</form>

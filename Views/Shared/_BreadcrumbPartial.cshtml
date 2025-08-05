@@ -1,7 +1,7 @@
 ﻿@{
     List<BreadcrumbItem> items = new List<BreadcrumbItem>()
     {
-        new BreadcrumbItem("Main Page", "Home", "Index")
+        new BreadcrumbItem("Main page", "Home", "Index")
     };
 
     if (ViewBag.Breadcrumb is not null)
@@ -16,8 +16,8 @@
     }
     else
     {
-        string? currentControllerName = (string?)ViewContext.RouteData.Values["controller"];
-        string? currentActionName = (string?)ViewContext.RouteData.Values["action"];
+        string? currentControllerName = (string?) ViewContext.RouteData.Values["controller"];
+        string? currentActionName = (string?) ViewContext.RouteData.Values["action"];
 
         bool IsBreadcrumbItemActive(BreadcrumbItem item)
         {

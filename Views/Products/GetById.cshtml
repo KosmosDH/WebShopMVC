@@ -1,4 +1,7 @@
 ﻿@using WebShopMVC.Data.Models
+@using WebShopMVC.Models.DTO
+@using WebShopMVC.Models.Utils
+@using WebShopMVC.Models.Views
 @using WebShopMVC.Services
 
 @model ProductViewModel
@@ -8,16 +11,16 @@
     Product product = Model.Product;
 }
 
-<p class="fs-4">Product Info</p>
+<p class="fs-4">Product Information</p>
 <hr />
 
 <p>
-    <b>Product name:</b>
+    <b>Product Name:</b>
     <br />
     @product.Name
 </p>
 <p>
-    <b>Description:</b>
+    <b>Product Description:</b>
     <br />
     @if (product.Description is not null)
     {
@@ -29,7 +32,7 @@
     }
 </p>
 <p>
-    <b>Price:</b>
+    <b>Product Price:</b>
     <br />
     @product.Price
 </p>
@@ -41,7 +44,7 @@
 @if (reviews.Count > 0)
 {
     <hr />
-    <p class="fs-4">Reviews list:</p>
+    <p class="fs-4">Products List</p>
     <hr />
 
     @foreach (Review review in reviews)
@@ -49,7 +52,7 @@
         <div class="card mb-3">
             <div class="card-header">
                 <span>
-                    <b>Author</b>: @review.Author
+                    <b>Автор отзыва</b>: @review.Author
                 </span>
             </div>
             <div class="card-body">
@@ -63,7 +66,7 @@
 
 @if (Model.Review is not null)
 {
-    <p class="fs-4">Leave a review</p>
+    <p class="fs-4">Leave a review about the product</p>
     <hr />
 
     @using (Html.BeginForm("CreateReview", "Products", new { id = product.Id }))
@@ -72,18 +75,16 @@
 
         <div class="mb-3">
             @Html.LabelFor(model => review.Author, htmlAttributes: new { @class = "form-label" })
-            @Html.EditorFor(model => review.Author, new
-                {
-                    htmlAttributes = new { @class = "form-control" }
-                })
+            @Html.EditorFor(model => review.Author, new {
+                htmlAttributes = new { @class = "form-control"}
+            })
             @Html.ValidationMessageFor(model => review.Author, "", new { @class = "text-danger" })
         </div>
         <div class="mb-3">
             @Html.LabelFor(model => review.Text, htmlAttributes: new { @class = "form-label" })
-            @Html.EditorFor(model => review.Text, new
-                {
-                    htmlAttributes = new { @class = "form-control" }
-                })
+            @Html.EditorFor(model => review.Text, new {
+                htmlAttributes = new { @class = "form-control" }
+            })
             @Html.ValidationMessageFor(model => review.Text, "", new { @class = "text-danger" })
         </div>
         <div class="mb-3">

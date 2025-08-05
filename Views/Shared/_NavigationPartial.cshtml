@@ -1,0 +1,68 @@
+﻿@using WebShopMVC.Data.Models
+@using WebShopMVC.Models.DTO
+@using WebShopMVC.Models.Utils
+@using WebShopMVC.Models.Views
+
+@{
+    User? user = (User?) Context.Items["CurrentUser"];
+
+    string GetUserFullName()
+    {
+        if (user.LastName == null)
+            return user.FirstName;
+
+        return $"{user.FirstName} {user.LastName}";
+    }
+}
+
+<nav class="navbar navbar-expand-lg bg-primary mb-3">
+    <div class="container-md">
+        <a class="navbar-brand text-light" asp-controller="Home" asp-action="Index">
+            @(ViewBag.Brand ?? "Web App")
+        </a>
+        <button class="navbar-toggler text-light border-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-list"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link text-light" aria-current="page" asp-controller="Home" asp-action="Index">
+                        <i class="bi bi-house"></i>
+                        Main page
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light" aria-current="page" asp-controller="Products" asp-action="Index">
+                        <i class="bi bi-bag"></i>
+                        Products list
+                    </a>
+                </li>
+            </ul>
+
+            @if (user == null)
+            {
+                <a class="btn btn-light ms-auto" asp-controller="Auth" asp-action="Authorization">
+                    <i class="bi bi-box-arrow-in-right me-1"></i>
+                    Log in
+                </a>
+            }
+            else
+            {
+                <div class="dropdown ms-auto">
+                    <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        <i class="bi bi-person-circle"></i>
+                        @GetUserFullName()
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown-item text-danger" asp-controller="Auth" asp-action="LogOut">
+                                <i class="bi bi-box-arrow-right"></i>
+                                Leave the account
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            }
+        </div>
+    </div>
+</nav>

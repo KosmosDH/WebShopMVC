@@ -1,4 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Net;
+using System.Text;
+using WebShopMVC.Models.Utils;
 
 namespace WebShopMVC.Controllers
 {

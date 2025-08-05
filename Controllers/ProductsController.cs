@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebShopMVC.Data.Models;
+using WebShopMVC.Filters;
 using WebShopMVC.Models.DTO;
 using WebShopMVC.Models.Utils;
 using WebShopMVC.Models.Views;
@@ -18,6 +19,7 @@ namespace WebShopMVC.Controllers
             _reviewService = reviewService;
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
             IList<Product> products = _productService.GetProducts();
@@ -30,20 +32,33 @@ namespace WebShopMVC.Controllers
             return View(products);
         }
 
+        [HttpGet]
         public IActionResult GetById([FromRoute] int? id)
         {
             if (id is null)
                 return RedirectToAction("Index");
 
-            Product? product = _productService.GetProductById((int)id);
+            Product? product = _productService.GetProductById((int) id);
 
             if (product is null)
                 return RedirectToAction("Index");
 
+            User? user = (User?)HttpContext.Items["CurrentUser"];
+            ReviewDTO? reviewDto = null;
+
+            if (user != null)
+            {
+                reviewDto = new ReviewDTO();
+                reviewDto.Author = user.FirstName;
+
+                if (user.LastName != null)
+                    reviewDto.Author += $" {user.LastName}";
+            }
+
             ProductViewModel model = new ProductViewModel()
             {
                 Product = product,
-                Review = new ReviewDTO()
+                Review = reviewDto
             };
 
             ViewBag.Breadcrumb = new List<BreadcrumbItem>()
@@ -55,6 +70,8 @@ namespace WebShopMVC.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        [AuthFilter]
         public IActionResult CreateReview([FromRoute] int? id, [FromForm] ReviewDTO review)
         {
             if (id is null)

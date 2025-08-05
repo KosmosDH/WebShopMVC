@@ -1,26 +1,25 @@
-﻿using WebShopMVC.Data.Models;
-using WebShopMVC.Data.Repositories;
-using WebShopMVC.Data.Repositories.Implementations;
+﻿using WebShopMVC.Data;
+using WebShopMVC.Data.Models;
 
 namespace WebShopMVC.Services.Implementations
 {
     public class ProductService : IProductService
     {
-        private readonly IRepository<Product> _productRepository;
+        private readonly ApplicationDbContext _database;
 
-        public ProductService(IRepository<Product> productRepository)
+        public ProductService(ApplicationDbContext database)
         {
-            _productRepository = productRepository;
+            _database = database;
         }
 
         public IList<Product> GetProducts()
         {
-            return _productRepository.GetAll();
+            return _database.Products.ToList();
         }
 
         public Product? GetProductById(int id)
         {
-            return _productRepository.GetById(id);
+            return _database.Products.Find(id);
         }
     }
 }

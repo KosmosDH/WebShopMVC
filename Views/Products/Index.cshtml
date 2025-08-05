@@ -1,9 +1,12 @@
 ﻿@using WebShopMVC.Data.Models
+@using WebShopMVC.Models.DTO
+@using WebShopMVC.Models.Utils
+@using WebShopMVC.Models.Views
 @model IList<Product>
 
 <div class="row g-3">
     @foreach (Product product in Model)
     {
-        <partial name="Components/_ProductCardPartial" model="product" />
+        <partial name="Components/ProductCardPartial" model="product" />
     }
 </div>

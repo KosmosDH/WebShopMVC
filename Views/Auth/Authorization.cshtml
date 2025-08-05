@@ -1,0 +1,33 @@
+﻿@model UserCredentialsDto
+
+<p class="fs-4">Authorization</p>
+<hr />
+
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger">
+        <span>@ViewBag.ErrorMessage</span>
+    </div>
+}
+
+<p>
+    If you don't have an account, you can
+    <a asp-controller="Auth" asp-action="Registration">register</a>.
+</p>
+<hr />
+
+<form asp-controller="Auth" asp-action="LogIn" method="post">
+    <div class="mb-3">
+        <label class="form-label" asp-for="Email">Email Address:</label>
+        <input class="form-control" asp-for="Email" />
+        <span class="text-danger" asp-validation-for="Email"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label" asp-for="Password">Password:</label>
+        <input class="form-control" asp-for="Password" />
+        <span class="text-danger" asp-validation-for="Password"></span>
+    </div>
+    <div class="mb-3">
+        <button class="btn btn-primary" type="submit">Enter</button>
+    </div>
+</form>
